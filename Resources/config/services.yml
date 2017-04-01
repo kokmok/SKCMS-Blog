@@ -1,0 +1,10 @@
+services:
+    blog.form.type.tag:
+        class: SKCMS\BlogBundle\Form\BlogTagType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type }
+    blog.listener.blog_post:
+        class: SKCMS\BlogBundle\Event\BlogPostDoctrineListener
+        tags:
+            - { name: doctrine.event_listener, event: preRemove }

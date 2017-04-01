@@ -1,0 +1,33 @@
+{% extends 'FrontBundle:pages-templates:page.html.twig' %}
+{% block pageHeader %}
+    <div class="container">
+        <div class="ct-breadcrumbs-container">
+            <div data-height="260" class="ct-breadcrumbs ct-js-breadcrumbs no-image" style="min-height: 260px;">
+                <div class="ct-breadcrumbs-title">
+                    <h1>#{{ tag.name }}</h1>
+                </div>
+            </div>
+
+            <ol class="breadcrumb  ">
+                <li><a href="{{ path('skcms_front_home') }}">Accueil</a></li>
+                <li><a href="{{ path('skcms_front_page',{slug:'blog'})}}">Blog</a></li>
+                <li class="">tags</li>
+                <li class="active">{{ tag.name }}</li>
+
+            </ol>
+        </div>
+    </div>
+{% endblock pageHeader %}
+{% block pageContent %}
+    <section class="container">
+        {#<h1 class="ct-headline text-center ct-u-marginBottom50">#}
+                                {#<span class="ct-headline-container ct-u-colorMotive">#}
+                                    {#<span class="ct-headline-line ct-headline-line--left"></span>#}
+                                    {#{{ tag.name }}#}
+                                    {#<span class="ct-headline-line ct-headline-line--right"></span>#}
+                                {#</span>#}
+        {#</h1>#}
+
+    </section>
+    {% include '@SKCMSBlog/post/post-list.html.twig' %}
+{% endblock pageContent %}

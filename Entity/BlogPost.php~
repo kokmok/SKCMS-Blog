@@ -1,0 +1,334 @@
+<?php
+
+namespace SKCMS\BlogBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use SKCMS\CoreBundle\Entity\SKBaseEntity;
+use SKCMS\CoreBundle\Entity\SKImage;
+
+/**
+ * BlogPost
+ *
+ * @ORM\Table(name="blog_post")
+ * @ORM\Entity(repositoryClass="SKCMS\BlogBundle\Repository\BlogPostRepository")
+ */
+class BlogPost extends SKBaseEntity
+{
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @Gedmo\Slug(fields={"title"},updatable=false)
+     * @Gedmo\Translatable
+     * @ORM\Column(length=128)
+     *
+     */
+    protected $slug;
+
+    /**
+     *
+     * @ORM\Column(type="string")
+     * @Gedmo\Translatable
+     */
+    protected $title;
+
+    /**
+     *
+     * @ORM\Column(type="text")
+     * @Gedmo\Translatable
+     */
+    protected $content;
+    /**
+     *
+     * @ORM\Column(type="text")
+     * @Gedmo\Translatable
+     */
+    protected $summary;
+
+    /**
+     * @var SKImage
+     * @ORM\OneToOne(targetEntity="SKCMS\CoreBundle\Entity\SKImage",cascade={"persist"})
+     */
+    private $picture;
+
+    /**
+     * @var BlogTag[]
+     * @ORM\ManyToMany(targetEntity="SKCMS\BlogBundle\Entity\BlogTag",cascade={"persist"},orphanRemoval=true)
+     */
+    private $tags;
+
+    /**
+     *
+     * @ORM\Column(name="minRoleAccess",type="string",length=255,nullable=true)
+     */
+    protected $minRoleAccess;
+
+
+    /**
+     * @var BlogCategory
+     * @ORM\ManyToOne(targetEntity="SKCMS\BlogBundle\Entity\BlogCategory")
+     */
+    private $category;
+
+    /**
+     *
+     * @ORM\Column(name="redirectRoute",type="string",length=255,nullable=true)
+     */
+    protected $redirectRoute;
+
+    /**
+     *
+     * @ORM\Column(name="forward",type="boolean",nullable=true)
+     */
+    protected $forward;
+
+    /**
+     *
+     * @ORM\Column(type="string",nullable=true)
+     * @Gedmo\Translatable
+     */
+    protected $SeoTitle;
+
+
+    /**
+     *
+     * @ORM\Column(type="text",nullable=true)
+     * @Gedmo\Translatable
+     */
+    protected $SeoDescription;
+
+
+
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->minRoleAccess = 'ANON';
+        $this->forward = false;
+    }
+
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Page
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        return $this;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+
+    public function getMinRoleAccess()
+    {
+        return $this->minRoleAccess;
+    }
+
+    public function setMinRoleAccess($role)
+    {
+        $this->minRoleAccess = $role;
+        return $this;
+    }
+    public function getRedirectRoute()
+    {
+        return $this->redirectRoute;
+    }
+
+    public function setRedirectRoute($redirectRoute)
+    {
+        $this->redirectRoute = $redirectRoute;
+        return $this;
+    }
+
+    public function getForward()
+    {
+        return $this->forward;
+    }
+
+    public function setForward($forward)
+    {
+        $this->forward = $forward;
+        return $this;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getSeoTitle()
+    {
+        return $this->SeoTitle;
+    }
+
+    /**
+     * @param mixed $SeoTitle
+     */
+    public function setSeoTitle($SeoTitle)
+    {
+        $this->SeoTitle = $SeoTitle;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSeoDescription()
+    {
+        return $this->SeoDescription;
+    }
+
+    /**
+     * @param mixed $SeoDescription
+     */
+    public function setSeoDescription($SeoDescription)
+    {
+        $this->SeoDescription = $SeoDescription;
+    }
+
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     * @return BlogPost
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string 
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \SKCMS\BlogBundle\Entity\BlogCategory $category
+     * @return BlogPost
+     */
+    public function setCategory(\SKCMS\BlogBundle\Entity\BlogCategory $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \SKCMS\BlogBundle\Entity\BlogCategory 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Add tags
+     *
+     * @param \SKCMS\BlogBundle\Entity\BlogTag $tags
+     * @return BlogPost
+     */
+    public function addTag(\SKCMS\BlogBundle\Entity\BlogTag $tags)
+    {
+        $this->tags[] = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Remove tags
+     *
+     * @param \SKCMS\BlogBundle\Entity\BlogTag $tags
+     */
+    public function removeTag(\SKCMS\BlogBundle\Entity\BlogTag $tags)
+    {
+        $this->tags->removeElement($tags);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Set picture
+     *
+     * @param \SKCMS\CoreBundle\Entity\SKImage $picture
+     * @return BlogPost
+     */
+    public function setPicture(\SKCMS\CoreBundle\Entity\SKImage $picture = null)
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Get picture
+     *
+     * @return \SKCMS\CoreBundle\Entity\SKImage 
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+
+}

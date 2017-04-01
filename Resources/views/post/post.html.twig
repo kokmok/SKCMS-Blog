@@ -1,0 +1,150 @@
+{% extends '@Front/pages-templates/page.html.twig' %}
+{% block pageHeader %}
+    {% endblock pageHeader %}
+{% block pageContent %}
+    <section class="container">
+
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="ct-blog-container ct-u-marginBottom80">
+
+                <article class="ct-blog-item ct-gallery-item--type3">
+
+                    <div class="ct-blog-item-outer">
+                        <div class="ct-blog-item-media">
+                            <figure>
+                                <a href="#"><img src="{{ asset(entity.picture) }}" alt="{{ entity.title }}" style="width:100%;"/></a>
+                                <div class="ct-imagedata ct-imagedata--right">
+                                    <span class="ct-imagedata-day">2</span>
+                                    <span class="ct-imagedata-month">Mar</span>
+                                </div>
+                            </figure>
+                        </div>
+
+                        <div class="ct-blog-item-wrapper">
+                            <div class="ct-blog-item-inner">
+                                <section>
+                                    <h3 class="ct-headline text-center ct-u-marginBottom50">
+                                <span class="ct-headline-container ct-u-colorMotive">
+                                    <span class="ct-headline-line ct-headline-line--left"></span>
+                                    {{ entity.title }}
+                                    <span class="ct-headline-line ct-headline-line--right"></span>
+                                </span>
+                                                            </h3>
+
+                                    <div class="ct-blog-item-preTitle text-center">
+                                        <p>By <a href="#">{{ entity.userCreate.firstName }} {{ entity.userCreate.lastName }}</a>. Publié le  <time datetime="{{ entity.creationDate|date('Y-m-d') }}"> {{ entity.creationDate|beautifulDate(app.request.locale) }}</time></p>
+                                    </div>
+                                    <div id="blogPostContent">
+                                    {{ entity.content|raw }}
+                                    </div>
+
+
+                                    <div class="ct-divider ct-divider--big ct-u-marginBottom30"></div>
+
+                                    <div class="ct-blog-item-social pull-right">
+                                        <ul class="socialicons socialicons--image">
+                                            <li>
+                                                <a href="http://www.facebook.com/sharer.php?u={{ app.request.uri }}" data-toggle="tooltip" data-placement="bottom" title data-original-title="Facebook">
+                                                    <i class="fa fa-facebook"></i>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="http://twitter.com/share?text={{ entity.title|url_encode }}&url={{ app.request.uri }}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Twitter">
+                                                    <i class="fa fa-twitter"></i>
+                                                </a>
+                                            </li>
+
+                                            {#<li>#}
+                                                {#<a href="#" data-toggle="tooltip" data-placement="bottom" title data-original-title="LinkedIn">#}
+                                                    {#<i class="fa fa-linkedin"></i>#}
+                                                {#</a>#}
+                                            {#</li>#}
+                                        </ul>
+                                    </div>
+
+
+                                    <div class="ct-blog-item-tags">
+                                        <p>
+                                            Tags:
+                                        </p>
+                                        <ul class="list-unstyled list-inline">
+                                            <li>
+                                                {% for tag in entity.tags %}
+                                                    <a href="{{ path('skblog_tag',{slug: tag.slug}) }}">{{tag }}</a>
+                                                {% endfor %}
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    {#<div class="ct-blog-item-categories">#}
+                                        {#<p>#}
+                                            {#Category:#}
+                                        {#</p>#}
+                                        {#<ul class="list-unstyled list-inline">#}
+                                            {#<li>#}
+                                                {#<a href="#">Fruit & Veggies</a>#}
+                                            {#</li>#}
+                                        {#</ul>#}
+                                    {#</div>#}
+
+                                    <div class="ct-singlePost-pagination">
+                                        <ul class="list-unstyled">
+                                            {% if previousPost is not null %}
+                                            <li>
+                                                <div class="ct-singlePost-pagination-inner">
+                                                    <div class="ct-ct-singlePost-pagination-arrowLeft">
+                                                        <a href="{{ path('skblog_single_post',{ slug: previousPost.slug}) }}"></a>
+                                                    </div>
+                                                    <div class="media ct-media">
+                                                        <div class="media-left">
+                                                            <a href="{{ path('skblog_single_post',{ slug: previousPost.slug}) }}">
+                                                                <img class="media-object ct-media-object" src="{{ asset(previousPost.picture.thumb(81,81)) }}" alt="{{ previousPost.title }}">
+                                                            </a>
+                                                        </div>
+                                                        <div class="media-body ct-media-body media-middle">
+                                                            <a href="{{ path('skblog_single_post',{ slug: previousPost.slug}) }}"><h6 class="media-heading ct-media-heading">{{ previousPost.title }}</h6></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            {% endif %}
+                                            {% if nextPost is not null %}
+                                            <li>
+                                                <div class="ct-singlePost-pagination-inner">
+                                                    <div class="ct-ct-singlePost-pagination-arrowRight">
+                                                        <a href="{{ path('skblog_single_post',{slug: nextPost.slug}) }}"></a>
+                                                    </div>
+                                                    <div class="media ct-media">
+                                                        <div class="media-body ct-media-body media-middle">
+                                                            <a href="{{ path('skblog_single_post',{slug: nextPost.slug}) }}"><h6 class="media-heading ct-media-heading">{{ nextPost.title }}</h6></a>
+                                                        </div>
+
+                                                        <div class="media-right">
+                                                            <a href="{{ path('skblog_single_post',{slug: nextPost.slug}) }}">
+                                                                <img class="media-object ct-media-object" src="{{ asset(nextPost.picture.thumb(81,81)) }}" alt="{{ nextPost.title }}">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+
+
+
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock pageContent %}

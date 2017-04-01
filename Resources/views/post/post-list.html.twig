@@ -1,0 +1,202 @@
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="ct-blog-container ct-gallery">
+                    {#{{ dump(lists) }}#}
+                    {#{% if tag is defined %}#}
+                        {#<h2 class="ct-headline #}{#text-center #}{#ct-u-marginBottom50">#}
+                                {#<span class="ct-headline-container ct-u-colorMotive">#}
+                                    {#<span class="ct-headline-line ct-headline-line--left"></span>#}
+                                    {#Articles contenant le tag {{tag.name  }}#}
+                                    {#<span class="ct-headline-line ct-headline-line--right"></span>#}
+                                {#</span>#}
+                        {#</h2>#}
+
+
+                    {#{% endif %}#}
+                    {% for blogPost in blogPosts %}
+                        <article class="ct-blog-item ct-gallery-item ct-gallery-item--type2">
+
+                            <div class="ct-blog-item-outer">
+                                <div class="ct-blog-item-media">
+                                    <figure>
+                                        <a href="{{ path('skblog_single_post',{slug: blogPost.slug}) }}"><img src="{{ asset(blogPost.picture) }}" alt="{{ blogPost.title }}"/></a>
+                                    </figure>
+                                </div>
+
+                                <div class="ct-blog-item-wrapper">
+                                    <div class="ct-blog-item-inner">
+                                        <section>
+
+                                            <div class="ct-blog-item-title">
+                                                <a href="{{ path('skblog_single_post',{slug: blogPost.slug}) }}"><h5><span>{{ blogPost.title }}</span></h5></a>
+                                            </div>
+
+                                            <div class="ct-blog-item-meta">
+                                                <span>par <a href="#"><span class="ct-blog-item-meta-author">{{ blogPost.userCreate.firstName }} </span></a> {% if blogPost.category is not null %}dans <a href="#"><span class="ct-blog-item-meta-categories">{{ blogPost.category }}</span></a>{% endif %} le
+                                                <time datetime="{{ blogPost.creationDate|date('Y-m-d') }}"> {{ blogPost.creationDate|beautifulDate(app.request.locale) }}</time></span>
+
+                                                <span>Tags: {% for tag in blogPost.tags %}{% if loop.index0 != 0 %} ,{% endif %}<a href="{{ path('skblog_tag',{slug: tag.slug}) }}">{{tag }}</a> {% endfor %}</span>
+                                            </div>
+
+                                            <div class="ct-blog-item-contentText">
+                                                <p class="ct-u-colorBrownDark2">
+                                                    {{ blogPost.summary|raw }}
+                                                </p>
+                                            </div>
+
+                                            <div class="text-left">
+                                                <a href="{{ path('skblog_single_post',{slug: blogPost.slug}) }}" class="btn btn-lg ct-btn-image btn-motive"><span>Voir l'article</span></a>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="row">
+                    <div class="col-lg-12 col-md-4 col-sm-6">
+                        <div class="widget ct-widget-searcher">
+                            <div class ="widget-inner">
+                                <div class="ct-widget-content">
+                                    <form role="search" action="{{ path('skblog_search') }}" method="get">
+                                        <div class="input-group">
+                                        <input type="text" class="form-control" name="q" {% if null != app.request.query.get('q') %}value="{{ app.request.query.get('q') }}"{% endif %} placeholder="Rechercher sur le blog">
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                                        </span>
+                                        </div><!-- /input-group -->
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    {#<div class="col-lg-12 col-md-4 col-sm-6">#}
+                    {#<div class="widget ct-widget-links">#}
+                    {#<div class="widget-inner">#}
+                    {#<div class="ct-widget-header">#}
+                    {#<h6><span>useful links</span></h6>#}
+                    {#</div>#}
+
+                    {#<div class="ct-widget-content">#}
+                    {#<ul class="list-unstyled">#}
+                    {#<li><i class="fa fa-angle-right"></i><a href="#"> Spices all over the house</a></li>#}
+                    {#<li><i class="fa fa-angle-right"></i><a href="#"> Big lettuce on plate</a></li>#}
+                    {#<li><i class="fa fa-angle-right"></i><a href="#"> Yellow corn, yummy...</a></li>#}
+                    {#<li><i class="fa fa-angle-right"></i><a href="#"> Secrets of broccoli</a></li>#}
+                    {#<li><i class="fa fa-angle-right"></i><a href="#"> Spicy potatoes</a></li>#}
+                    {#<li><i class="fa fa-angle-right"></i><a href="#"> Reddish tomatoes</a></li>#}
+                    {#<li><i class="fa fa-angle-right"></i><a href="#"> Importance of lemons</a></li>#}
+                    {#<li><i class="fa fa-angle-right"></i><a href="#"> Canola oil & its purpose</a></li>#}
+                    {#<li><i class="fa fa-angle-right"></i><a href="#"> Yummy vegetables</a></li>#}
+                    {#<li><i class="fa fa-angle-right"></i><a href="#"> Veggies & Fruits</a></li>#}
+                    {#</ul>#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#</div>#}
+
+
+                    <div class="col-lg-12 col-md-4 col-sm-6">
+                        <div class="widget ct-widget-recentPost">
+                            <div class="widget-inner">
+                                <div class="ct-widget-header">
+                                    <h6><span>Articles récents</span></h6>
+                                </div>
+
+                                <div class="ct-widget-content">
+                                    {% for post in skcmsVars.blog.lastestPosts %}
+                                        <div class="media ct-media">
+                                            <div class="media-left">
+                                                {% if post.picture is not null %}
+                                                    <a href="{{ path('skblog_single_post',{slug: post.slug}) }}">
+                                                        <img class="media-object ct-media-object" src="{{ asset(post.picture.thumb(70,70)) }}" alt="{{ post.title }}">
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                            <div class="media-body ct-media-body media-middle">
+                                                <a href="{{ path('skblog_single_post',{slug: post.slug}) }}"><h6 class="media-heading ct-media-heading">{{ post.title }}</h6></a>
+                                                <time datetime="{{ post.creationDate|date('Y-m-d') }}"> {{ post.creationDate|beautifulDate('fr') }}</time>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix visible-md"></div>
+
+
+                    <div class="col-lg-12 col-md-4 col-sm-6">
+                        <div class="widget ct-widget-tags">
+                            <div class="widget-inner">
+                                <div class="ct-widget-header">
+                                    <h6><span>Tags</span></h6>
+                                </div>
+
+                                <div class="ct-widget-content">
+                                    <ul class="list-unstyled list-inline">
+                                        <li>
+                                            {% for tag in skcmsVars.blog.tags %}
+                                                <a href="{{ path('skblog_tag',{slug: tag.slug}) }}">{{ tag }}</a>
+
+                                            {% endfor %}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    {#<div class="col-lg-12 col-md-4 col-sm-6">#}
+                    {#<div class="widget ct-widget-latestComments">#}
+                    {#<div class="widget-inner">#}
+                    {#<div class="ct-widget-header">#}
+                    {#<h6><span>latest comments</span></h6>#}
+                    {#</div>#}
+
+                    {#<div class="ct-widget-content">#}
+                    {#<ul class="list-unstyled">#}
+                    {#<li><i class="fa fa-circle"></i><a href="#" class="ct-widget-author">Mary56</a> on <a href="#" class="ct-widget-article">Canola Oil Secrets</a></li>#}
+                    {#<li><i class="fa fa-circle"></i><a href="#" class="ct-widget-author">Doloris888</a> on <a href="#" class="ct-widget-article">Veggies & Fruits</a></li>#}
+                    {#<li><i class="fa fa-circle"></i><a href="#" class="ct-widget-author">Gerry Mad</a> on <a href="#" class="ct-widget-article">Spices & Flavors</a></li>#}
+                    {#<li><i class="fa fa-circle"></i><a href="#" class="ct-widget-author">MeredithG</a> on <a href="#" class="ct-widget-article">Peppermint</a></li>#}
+                    {#<li><i class="fa fa-circle"></i><a href="#" class="ct-widget-author">FergusonY</a> on <a href="#" class="ct-widget-article">Watermelon</a></li>#}
+                    {#<li><i class="fa fa-circle"></i><a href="#" class="ct-widget-author">KevinGT</a> on <a href="#" class="ct-widget-article">Tips About Onion</a></li>#}
+                    {#</ul>#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#</div>#}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container ct-u-marginTop50 ct-u-marginBottom10">
+    <div class="ct-divider ct-divider--big"></div>
+</div>
+
+<div class="ct-pagination text-center ct-u-marginBottom80">
+    <ul class="list-unstyled list-inline">
+        {% for pageNumber in 1..maxPage %}
+            <li>
+                <a href="{{ path(app.request.get('_route'),app.request.get('_route_params')|merge({page: pageNumber})) }}" class="{% if pageNumber == app.request.get('_route_params').page %}active{% endif %}">{{ pageNumber }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+

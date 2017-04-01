@@ -1,0 +1,26 @@
+skblog_search:
+    path: /blog/search/{page}/{_format}
+    defaults: {_controller: SKCMSBlogBundle:Front:search, page: 1, _format: html}
+    requirements:
+        page: \d+
+skblog_single_post:
+    path: /blog/{slug}.{_format}
+    defaults: {_controller: SKCMSBlogBundle:Front:post, _format: html}
+skblog_single_post_multilingue:
+    path: /{_locale}/blog/{slug}.{_format}
+    defaults: {_controller: SKCMSBlogBundle:Front:post, _format: html, _locale: null}
+skblog_tag_multilingue:
+    path: /{_locale}/blog/tag/{slug}/{page}
+    defaults: {_controller: SKCMSBlogBundle:Front:tag, _locale: null, page: 1}
+    requirements:
+        page: \d+
+skblog_tag:
+    path: /blog/tag/{slug}/{page}
+    defaults: {_controller: SKCMSBlogBundle:Front:tag, page: 1}
+    requirements:
+        page: \d+
+skblog_search_multilingue:
+    path: /{_locale}/blog/search/{page}/{_format}
+    defaults: {_controller: SKCMSBlogBundle:Front:search, page: 1, _format: html}
+    requirements:
+        page: \d+

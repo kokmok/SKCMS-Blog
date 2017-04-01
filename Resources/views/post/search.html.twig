@@ -1,0 +1,20 @@
+{% extends '@SKCMSBlog/tag/explore-tag.html.twig' %}
+{% block pageHeader %}
+    <div class="container">
+        <div class="ct-breadcrumbs-container">
+            <div data-height="260" class="ct-breadcrumbs ct-js-breadcrumbs no-image" style="min-height: 260px;">
+                <div class="ct-breadcrumbs-title">
+                    <h1>Recherche : {{ app.request.query.get('q') }}</h1>
+                </div>
+            </div>
+
+            <ol class="breadcrumb  ">
+                <li><a href="{{ path('skcms_front_home') }}">Accueil</a></li>
+                <li><a href="{{ path('skcms_front_page',{slug:'blog'})}}">Blog</a></li>
+                <li class="">Recherche</li>
+                <li class="active">{{ app.request.query.get('q') }}</li>
+
+            </ol>
+        </div>
+    </div>
+{% endblock pageHeader %}
