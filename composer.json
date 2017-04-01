@@ -1,5 +1,5 @@
 {
-  "name": "skcms/contact-bundle",
+  "name": "skcms/blog-bundle",
 
 "type": "symfony-bundle",
 
@@ -40,11 +40,11 @@
 
 "autoload": {
 
-"psr-0": { "SKCMS\\ContactBundle":   "" }
+"psr-0": { "SKCMS\\BlogBundle":   "" }
 
 },
 
-"target-dir": "SKCMS/ContactBundle",
+"target-dir": "SKCMS/BlogBundle",
 
 "minimum-stability":   "dev"
 
